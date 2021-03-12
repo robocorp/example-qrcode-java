@@ -19,18 +19,6 @@
             <artifactId>boofcv-core</artifactId>
             <version>0.37</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.boofcv/boofcv-swing -->
-        <dependency>
-            <groupId>org.boofcv</groupId>
-            <artifactId>boofcv-swing</artifactId>
-            <version>0.37</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.robotframework/jrobotremoteserver -->
-        <dependency>
-            <groupId>org.robotframework</groupId>
-            <artifactId>jrobotremoteserver</artifactId>
-            <version>4.0.1</version>
-        </dependency>
     </dependencies>
 
     <build>

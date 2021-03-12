@@ -25,48 +25,51 @@ import boofcv.factory.fiducial.FactoryFiducial;
 import boofcv.io.image.ConvertBufferedImage;
 import boofcv.io.image.UtilImageIO;
 import boofcv.struct.image.GrayU8;
-import org.robotframework.javalib.annotation.RobotKeyword;
-import org.robotframework.remoteserver.RemoteServer;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 
 public class QrCodeUtil {
 	public static void main( String[] args ) throws Exception {
 		BoofConcurrency.USE_CONCURRENT = false;
 
-		QrCodeUtil me = new QrCodeUtil();
-		RemoteServer.configureLogging();
-		//Logger.getRootLogger().setLevel(Level.INFO);
-		RemoteServer server = new RemoteServer(8270);
-		server.putLibrary("/", me);
-		server.start();
+		switch(args[0]) {
+			case "render":
+				render(args[1]);
+				break;
+			case "detect":
+				detect(args[1]);
+				break;
+		}
 	}
 
-	@RobotKeyword
-	public void render(String message, String filename) {
+	public static void render(String filename) throws Exception {
+		String message = new String(Files.readAllBytes(Paths.get("input.dat")));
 		QrCode qr = new QrCodeEncoder().
-				// setError(QrCode.ErrorLevel.M).
 				addAutomatic(message).fixate();
 
 		QrCodeGeneratorImage render = new QrCodeGeneratorImage(20);
 		render.render(qr);
 
-		//BufferedImage image = ConvertBufferedImage.convertTo(render.getGray(), null);
 		UtilImageIO.saveImage(render.getGray(), filename);
 	}
 
-	@RobotKeyword
-	public String detect(String filename) throws Exception {
+	public static void detect(String filename) throws Exception {
 		BufferedImage input = ImageIO.read(new File(filename));
-		GrayU8 gray = ConvertBufferedImage.convertFrom(input, (GrayU8)null);
+		GrayU8 gray = ConvertBufferedImage.convertFrom(input, (GrayU8) null);
 
 		QrCodeDetector<GrayU8> detector = FactoryFiducial.qrcode(null, GrayU8.class);
 		detector.process(gray);
 
 		List<QrCode> detections = detector.getDetections();
-		return detections.isEmpty() ? "": detections.get(0).message;
+		String message = detections.isEmpty() ? "" : detections.get(0).message;
+		try (PrintWriter out = new PrintWriter("output.dat")) {
+			out.print(message);
+		}
 	}
 }
