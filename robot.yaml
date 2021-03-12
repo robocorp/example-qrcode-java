@@ -1,0 +1,14 @@
+tasks:
+  Render QR Code:
+    robotTaskName: Render
+  Detect QR Code:
+    robotTaskName: Detect
+
+condaConfigFile: conda.yaml
+artifactsDir: output
+PATH:
+  - .
+PYTHONPATH:
+  - .
+ignoreFiles:
+  - .gitignore
