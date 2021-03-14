@@ -8,9 +8,9 @@ Example Robot to Detect and Render QR Codes with java boofcv library
 Configure two Robocloud environment variables:
 
 <pre>
-MESSAGE_KEY
-      Name of the Work Item key that holds the data to be rendered into QR code
-IMAGE_KEY
+DATA
+      Name of the Work Item key or literal message to be rendered into QR code
+IMAGE
       Name of the Work Item file to hold the image of rendered QR Code
 </pre>
 
@@ -19,9 +19,9 @@ IMAGE_KEY
 Configure two Robocloud environment variables:
 
 <pre>
-MESSAGE_KEY
+DATA
       Name of the Work Item key to hold the data read from the QR code
-IMAGE_KEY
+IMAGE
       Name of the Work Item file that holds the image where QR code is searched from
 </pre>
 
