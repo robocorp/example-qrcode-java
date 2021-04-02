@@ -35,7 +35,7 @@ channels:
 
 dependencies:
   - python=3.7.5
-  - rpaframework=7.6.0
+  - rpaframework=9.3.2
   - openjdk=11.0.8
 </pre>
 
